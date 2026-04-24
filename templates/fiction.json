@@ -1,0 +1,130 @@
+{
+  "templates": [
+    {
+      "id": "novel",
+      "name": "Novel",
+      "description": "Classic novel format with elegant serif fonts",
+      "category": "Fiction",
+      "icon": "📖",
+      "styles": {
+        "fontFamily": "Crimson Pro",
+        "fontSize": 12,
+        "lineHeight": 1.8,
+        "textAlign": "justify",
+        "pageSize": "6x9",
+        "firstLineIndent": "1.5em"
+      },
+      "sections": [
+        { "type": "title-page", "title": "Title Page" },
+        { "type": "copyright", "title": "Copyright" },
+        { "type": "dedication", "title": "Dedication" },
+        { "type": "toc", "title": "Table of Contents" },
+        { "type": "chapter", "title": "Chapter 1" }
+      ],
+      "sampleContent": "<h1>{{title}}</h1><p style='text-align:center'>A Novel by {{author}}</p>"
+    },
+    {
+      "id": "short-story",
+      "name": "Short Story",
+      "description": "Compact format for short fiction",
+      "category": "Fiction",
+      "icon": "📝",
+      "styles": {
+        "fontFamily": "Merriweather",
+        "fontSize": 12,
+        "lineHeight": 1.6,
+        "textAlign": "left",
+        "pageSize": "5.5x8.5",
+        "firstLineIndent": "1em"
+      },
+      "sections": [
+        { "type": "title-page", "title": "Title" },
+        { "type": "story", "title": "Story" }
+      ],
+      "sampleContent": "<h1 style='text-align:center'>{{title}}</h1><p style='text-align:center;font-style:italic'>by {{author}}</p><hr style='margin:2em 0'>"
+    },
+    {
+      "id": "romance",
+      "name": "Romance Novel",
+      "description": "Romantic fiction with flowing typography",
+      "category": "Fiction",
+      "icon": "💕",
+      "styles": {
+        "fontFamily": "Lora",
+        "fontSize": 12,
+        "lineHeight": 1.8,
+        "textAlign": "justify",
+        "pageSize": "5x8",
+        "firstLineIndent": "1.5em"
+      },
+      "sections": [
+        { "type": "title-page", "title": "Title Page" },
+        { "type": "dedication", "title": "Dedication" },
+        { "type": "chapter", "title": "Chapter 1" }
+      ],
+      "sampleContent": "<h1 style='text-align:center;font-style:italic'>{{title}}</h1>"
+    },
+    {
+      "id": "thriller",
+      "name": "Thriller/Mystery",
+      "description": "Fast-paced format for suspense novels",
+      "category": "Fiction",
+      "icon": "🔍",
+      "styles": {
+        "fontFamily": "Georgia",
+        "fontSize": 11,
+        "lineHeight": 1.6,
+        "textAlign": "left",
+        "pageSize": "6x9",
+        "firstLineIndent": "1em"
+      },
+      "sections": [
+        { "type": "prologue", "title": "Prologue" },
+        { "type": "chapter", "title": "Chapter 1" }
+      ],
+      "sampleContent": "<h2 style='text-transform:uppercase;letter-spacing:0.1em'>Prologue</h2>"
+    },
+    {
+      "id": "fantasy",
+      "name": "Fantasy/Sci-Fi",
+      "description": "Epic format for genre fiction",
+      "category": "Fiction",
+      "icon": "🐉",
+      "styles": {
+        "fontFamily": "EB Garamond",
+        "fontSize": 12,
+        "lineHeight": 1.7,
+        "textAlign": "justify",
+        "pageSize": "6x9",
+        "firstLineIndent": "1.5em"
+      },
+      "sections": [
+        { "type": "title-page", "title": "Title Page" },
+        { "type": "map", "title": "Map" },
+        { "type": "prologue", "title": "Prologue" },
+        { "type": "chapter", "title": "Chapter 1" }
+      ],
+      "sampleContent": "<h1 style='text-align:center'>{{title}}</h1><p style='text-align:center'>Book One of the Series</p>"
+    },
+    {
+      "id": "childrens",
+      "name": "Children's Book",
+      "description": "Large text, playful format for young readers",
+      "category": "Fiction",
+      "icon": "🧸",
+      "styles": {
+        "fontFamily": "Comic Sans MS",
+        "fontSize": 16,
+        "lineHeight": 2,
+        "textAlign": "left",
+        "pageSize": "8.5x11",
+        "firstLineIndent": "0"
+      },
+      "sections": [
+        { "type": "title-page", "title": "Title" },
+        { "type": "page", "title": "Page 1" }
+      ],
+      "sampleContent": "<h1 style='text-align:center;color:#e74c3c'>{{title}}</h1>"
+    }
+  ]
+}

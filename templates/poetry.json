@@ -1,0 +1,147 @@
+{
+  "templates": [
+    {
+      "id": "poetry-collection",
+      "name": "Poetry Collection",
+      "description": "Elegant format for poetry books",
+      "category": "Poetry",
+      "icon": "🌸",
+      "styles": {
+        "fontFamily": "EB Garamond",
+        "fontSize": 12,
+        "lineHeight": 1.8,
+        "textAlign": "left",
+        "pageSize": "5.5x8.5",
+        "firstLineIndent": "0"
+      },
+      "sections": [
+        { "type": "title-page", "title": "Title Page" },
+        { "type": "dedication", "title": "Dedication" },
+        { "type": "toc", "title": "Contents" },
+        { "type": "poem", "title": "Poem" }
+      ],
+      "sampleContent": "<h1 style='text-align:center;font-style:italic'>{{title}}</h1><p style='text-align:center'>Poems by {{author}}</p>"
+    },
+    {
+      "id": "classic",
+      "name": "Classic Style",
+      "description": "Timeless classic book format",
+      "category": "Classic",
+      "icon": "📜",
+      "styles": {
+        "fontFamily": "Playfair Display",
+        "fontSize": 12,
+        "lineHeight": 1.7,
+        "textAlign": "justify",
+        "pageSize": "6x9",
+        "firstLineIndent": "1.5em"
+      },
+      "sections": [
+        { "type": "half-title", "title": "Half Title" },
+        { "type": "title-page", "title": "Title Page" },
+        { "type": "copyright", "title": "Copyright" },
+        { "type": "dedication", "title": "Dedication" },
+        { "type": "epigraph", "title": "Epigraph" },
+        { "type": "toc", "title": "Contents" },
+        { "type": "preface", "title": "Preface" },
+        { "type": "chapter", "title": "Chapter I" }
+      ],
+      "sampleContent": "<h1 style='text-align:center;font-variant:small-caps'>{{title}}</h1>"
+    },
+    {
+      "id": "handwritten-journal",
+      "name": "Handwritten Journal",
+      "description": "Personal journal with handwritten feel",
+      "category": "Personal",
+      "icon": "✍️",
+      "styles": {
+        "fontFamily": "Caveat",
+        "fontSize": 18,
+        "lineHeight": 2,
+        "textAlign": "left",
+        "pageSize": "5.5x8.5",
+        "firstLineIndent": "0"
+      },
+      "sections": [
+        { "type": "cover", "title": "My Journal" },
+        { "type": "entry", "title": "Entry" }
+      ],
+      "sampleContent": "<h1 style='text-align:center'>My Journal</h1><p style='text-align:center;font-style:italic'>Personal Reflections</p>"
+    },
+    {
+      "id": "handwritten-letter",
+      "name": "Handwritten Letter",
+      "description": "Personal letter format with cursive font",
+      "category": "Personal",
+      "icon": "💌",
+      "styles": {
+        "fontFamily": "Dancing Script",
+        "fontSize": 16,
+        "lineHeight": 1.8,
+        "textAlign": "left",
+        "pageSize": "8.5x11",
+        "firstLineIndent": "0"
+      },
+      "sections": [
+        { "type": "letter", "title": "Letter" }
+      ],
+      "sampleContent": "<p style='text-align:right'>{{date}}</p><p>Dear Friend,</p>"
+    },
+    {
+      "id": "handwritten-notes",
+      "name": "Handwritten Notes",
+      "description": "Casual notes with handwritten style",
+      "category": "Personal",
+      "icon": "📓",
+      "styles": {
+        "fontFamily": "Indie Flower",
+        "fontSize": 16,
+        "lineHeight": 2,
+        "textAlign": "left",
+        "pageSize": "a5",
+        "firstLineIndent": "0"
+      },
+      "sections": [
+        { "type": "note", "title": "Note" }
+      ],
+      "sampleContent": "<h2>Notes</h2><ul><li>Point one</li><li>Point two</li></ul>"
+    },
+    {
+      "id": "screenplay",
+      "name": "Screenplay",
+      "description": "Standard screenplay format",
+      "category": "Script",
+      "icon": "🎬",
+      "styles": {
+        "fontFamily": "Courier New",
+        "fontSize": 12,
+        "lineHeight": 1.5,
+        "textAlign": "left",
+        "pageSize": "8.5x11",
+        "firstLineIndent": "0"
+      },
+      "sections": [
+        { "type": "title-page", "title": "Title Page" },
+        { "type": "scene", "title": "Scene 1" }
+      ],
+      "sampleContent": "<p style='text-align:center;text-transform:uppercase'>{{title}}</p><p style='text-align:center'>Written by</p><p style='text-align:center'>{{author}}</p>"
+    },
+    {
+      "id": "blank",
+      "name": "Blank Document",
+      "description": "Start fresh with no template",
+      "category": "Other",
+      "icon": "📄",
+      "styles": {
+        "fontFamily": "Crimson Pro",
+        "fontSize": 12,
+        "lineHeight": 1.6,
+        "textAlign": "left",
+        "pageSize": "8.5x11",
+        "firstLineIndent": "0"
+      },
+      "sections": [],
+      "sampleContent": ""
+    }
+  ]
+}

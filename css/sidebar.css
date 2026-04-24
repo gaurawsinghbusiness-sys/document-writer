@@ -1,0 +1,259 @@
+/* ============================================
+   Document Writer - Sidebar Styles
+   Chapter Navigation Panel
+   ============================================ */
+
+.sidebar {
+    width: var(--sidebar-width);
+    background: var(--surface-card);
+    border-right: 1px solid var(--border-light);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    transition: width var(--transition-normal), transform var(--transition-normal);
+}
+
+.sidebar.collapsed {
+    width: 0;
+    transform: translateX(-100%);
+    overflow: hidden;
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-4);
+    border-bottom: 1px solid var(--border-light);
+}
+
+.sidebar-header h3 {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.sidebar-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--space-3);
+}
+
+.sidebar-footer {
+    padding: var(--space-3);
+    border-top: 1px solid var(--border-light);
+}
+
+.sidebar-footer .btn-text {
+    width: 100%;
+    justify-content: flex-start;
+    gap: var(--space-2);
+    padding: var(--space-3);
+    font-size: var(--text-sm);
+}
+
+.sidebar-footer .btn-text svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Chapter List */
+.chapter-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+.chapter-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    position: relative;
+}
+
+.chapter-item:hover {
+    background: var(--gray-100);
+}
+
+.chapter-item.active {
+    background: var(--primary-50);
+    color: var(--primary-600);
+}
+
+.chapter-item.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 70%;
+    background: var(--primary-500);
+    border-radius: var(--radius-full);
+}
+
+[data-theme="dark"] .chapter-item:hover {
+    background: var(--gray-700);
+}
+
+[data-theme="dark"] .chapter-item.active {
+    background: rgba(43, 87, 154, 0.2);
+}
+
+.chapter-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background: var(--gray-200);
+    color: var(--text-secondary);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+    flex-shrink: 0;
+}
+
+.chapter-item.active .chapter-number {
+    background: var(--primary-500);
+    color: var(--text-inverse);
+}
+
+.chapter-title {
+    flex: 1;
+    font-size: var(--text-sm);
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    outline: none;
+}
+
+.chapter-title:focus {
+    background: var(--surface-card);
+    padding: var(--space-1) var(--space-2);
+    margin: calc(var(--space-1) * -1) calc(var(--space-2) * -1);
+    border-radius: var(--radius-sm);
+    box-shadow: 0 0 0 2px var(--primary-400);
+}
+
+/* Chapter Actions (on hover) */
+.chapter-item .chapter-actions {
+    display: none;
+    gap: var(--space-1);
+}
+
+.chapter-item:hover .chapter-actions {
+    display: flex;
+}
+
+.chapter-action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-sm);
+    color: var(--text-tertiary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.chapter-action-btn:hover {
+    background: var(--gray-200);
+    color: var(--text-primary);
+}
+
+.chapter-action-btn svg {
+    width: 14px;
+    height: 14px;
+}
+
+/* Drag and Drop States */
+.chapter-item.dragging {
+    opacity: 0.5;
+}
+
+.chapter-item.drag-over {
+    border-top: 2px solid var(--primary-500);
+}
+
+/* Empty State */
+.chapters-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-8) var(--space-4);
+    text-align: center;
+    color: var(--text-tertiary);
+}
+
+.chapters-empty svg {
+    width: 48px;
+    height: 48px;
+    margin-bottom: var(--space-4);
+    opacity: 0.5;
+}
+
+.chapters-empty p {
+    font-size: var(--text-sm);
+}
+
+/* Sidebar Toggle Button (for mobile) */
+.sidebar-toggle {
+    display: none;
+    position: fixed;
+    left: var(--space-4);
+    bottom: calc(var(--status-bar-height) + var(--space-4));
+    width: 44px;
+    height: 44px;
+    background: var(--primary-500);
+    color: var(--text-inverse);
+    border: none;
+    border-radius: var(--radius-full);
+    box-shadow: var(--shadow-lg);
+    cursor: pointer;
+    z-index: var(--z-sticky);
+    transition: all var(--transition-fast);
+}
+
+.sidebar-toggle:hover {
+    background: var(--primary-600);
+    transform: scale(1.05);
+}
+
+.sidebar-toggle svg {
+    width: 20px;
+    height: 20px;
+}
+
+@media (max-width: 1024px) {
+    .sidebar {
+        position: fixed;
+        left: 0;
+        top: calc(var(--header-height) + var(--toolbar-height));
+        bottom: var(--status-bar-height);
+        z-index: var(--z-sticky);
+        box-shadow: var(--shadow-xl);
+    }
+    
+    .sidebar.collapsed {
+        transform: translateX(-100%);
+    }
+    
+    .sidebar-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}

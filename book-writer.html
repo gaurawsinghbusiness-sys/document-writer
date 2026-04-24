@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pro Book Editor</title>
+    <meta name="description" content="Professional book writing application with dual writing modes">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Dancing+Script&family=EB+Garamond:ital,wght@0,400;0,700;1,400&family=Indie+Flower&family=Inter:wght@400;500;600;700&family=Kalam&family=Lato:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Open+Sans:wght@400;600;700&family=Pacifico&family=Playfair+Display:wght@400;700&family=Roboto:wght@400;500;700&family=Satisfy&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/blocks.css">
+    
+    <style>
+        :root {
+            --bg: #e8e4df;
+            --panel: #f5f3f0;
+            --paper: #ffffff;
+            --text: #1a1a1a;
+            --text-secondary: #555;
+            --text-muted: #888;
+            --border: #d0ccc5;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --success: #059669;
+        }
+        
+        [data-theme="dark"] {
+            --bg: #1a1a1e;
+            --panel: #252528;
+            --paper: #2a2a2e;
+            --text: #e5e5e5;
+            --text-secondary: #aaa;
+            --text-muted: #666;
+            --border: #3a3a40;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        /* Header */
+        .header {
+            background: var(--panel);
+            border-bottom: 1px solid var(--border);
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logo {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .logo svg { width: 20px; height: 20px; }
+        
+        .doc-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .doc-title input {
+            font-size: 0.95rem;
+            font-weight: 600;
+            border: none;
+            background: transparent;
+            color: var(--text);
+            padding: 6px 10px;
+            border-radius: 4px;
+            width: 200px;
+        }
+        
+        .doc-title input:focus {
+            background: var(--bg);
+            outline: 2px solid var(--accent);
+        }
+        
+        .save-status { font-size: 0.75rem; color: var(--success); }
+        
+        /* Mode Controls */
+        .mode-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: auto;
+            margin-right: 16px;
+        }
+        
+        .mode-toggle, .feature-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border: 1px solid var(--border);
+            background: var(--panel);
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s;
+            white-space: nowrap;
+        }
+        
+        .mode-toggle:hover, .feature-btn:hover { background: var(--bg); }
+        .mode-toggle.active, .feature-btn.active { 
+            background: var(--accent); 
+            color: white; 
+            border-color: var(--accent); 
+        }
+        
+        .header-actions { display: flex; gap: 6px; }
+        
+        .btn {
+            padding: 7px 14px;
+            border: 1px solid var(--border);
+            background: var(--panel);
+            color: var(--text);
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.15s;
+        }
+        
+        .btn:hover { background: var(--bg); }
+        .btn-primary { background: var(--accent); color: white; border-color: var(--accent); }
+        .btn-primary:hover { background: var(--accent-hover); }
+        .btn svg { width: 16px; height: 16px; }
+        
+        /* Toolbar */
+        .toolbar {
+            background: var(--panel);
+            border-bottom: 1px solid var(--border);
+            padding: 6px 16px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+        
+        .tool-group {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            padding: 0 6px;
+            border-right: 1px solid var(--border);
+        }
+        
+        .tool-group:last-child { border-right: none; }
+        
+        .tool-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: transparent;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            transition: all 0.1s;
+        }
+        
+        .tool-btn:hover { background: var(--bg); color: var(--text); }
+        .tool-btn.active { background: var(--accent); color: white; }
+        .tool-btn svg { width: 16px; height: 16px; }
+        
+        .tool-select {
+            height: 30px;
+            padding: 0 8px;
+            border: 1px solid var(--border);
+            background: var(--panel);
+            color: var(--text);
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+        
+        .tool-select:focus { outline: 2px solid var(--accent); }
+        
+        .tool-label {
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-right: 4px;
+        }
+        
+        /* Main Layout */
+        .main { flex: 1; display: flex; overflow: hidden; }
+        
+        /* Left Panel */
+        .left-panel {
+            width: 220px;
+            background: var(--panel);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .panel-section { border-bottom: 1px solid var(--border); }
+        
+        .panel-header {
+            padding: 10px 14px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg);
+        }
+        
+        .panel-header button {
+            width: 22px;
+            height: 22px;
+            border: none;
+            background: var(--accent);
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            line-height: 1;
+        }
+        
+        .panel-content { max-height: 180px; overflow-y: auto; }
+        
+        .page-item, .section-item {
+            padding: 10px 14px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.1s;
+        }
+        
+        .page-item:hover, .section-item:hover { background: var(--bg); }
+        .page-item.active, .section-item.active { background: var(--accent); color: white; }
+        
+        .page-item .num {
+            width: 20px;
+            height: 20px;
+            background: var(--bg);
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .page-item.active .num { background: rgba(255,255,255,0.2); }
+        
+        /* Editor Area */
+        .editor-area { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+        
+        .editor-scroll {
+            flex: 1;
+            overflow-y: auto;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+            background: var(--bg);
+        }
+        
+        .paper {
+            background: var(--paper);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            border-radius: 2px;
+            position: relative;
+            transition: all 0.2s;
+            width: 6in;
+            min-height: 9in;
+        }
+        
+        .paper-inner { padding: 1in 0.75in; height: 100%; }
+        
+        .editor, #editorContainer {
+            font-family: 'Crimson Pro', Georgia, serif;
+            font-size: 12pt;
+            line-height: 1.8;
+            color: var(--text);
+            outline: none;
+            min-height: 100%;
+        }
+        
+        .editor:empty::before, .editor.empty::before {
+            content: 'Start writing your masterpiece...';
+            color: var(--text-muted);
+            font-style: italic;
+        }
+        
+        .editor.has-indent p { text-indent: 1.5em; }
+        .editor h1 { font-size: 28pt; text-align: center; margin-bottom: 0.5em; }
+        .editor h2 { font-size: 22pt; margin: 1.2em 0 0.5em; }
+        .editor h3 { font-size: 16pt; margin: 1em 0 0.4em; }
+        .editor p { margin-bottom: 1em; }
+        
+        /* Right Panel */
+        .right-panel {
+            width: 240px;
+            background: var(--panel);
+            border-left: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+        
+        .control-group {
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .control-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+        
+        .control-row { display: flex; gap: 8px; margin-bottom: 8px; }
+        .control-row:last-child { margin-bottom: 0; }
+        
+        .control-input {
+            flex: 1;
+            padding: 6px 10px;
+            border: 1px solid var(--border);
+            background: var(--panel);
+            color: var(--text);
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+        
+        .control-input:focus { outline: 2px solid var(--accent); border-color: transparent; }
+        .control-input-sm { width: 50px; text-align: center; }
+        .unit { font-size: 0.7rem; color: var(--text-muted); align-self: center; }
+        
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .stat-box { background: var(--bg); padding: 10px; border-radius: 6px; text-align: center; }
+        .stat-value { font-size: 1.2rem; font-weight: 700; color: var(--accent); }
+        .stat-label { font-size: 0.65rem; text-transform: uppercase; color: var(--text-muted); }
+        
+        .goal-bar { height: 8px; background: var(--bg); border-radius: 4px; overflow: hidden; margin-top: 8px; }
+        .goal-progress { height: 100%; background: var(--accent); border-radius: 4px; transition: width 0.3s; width: 0%; }
+        .goal-text { display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--text-muted); margin-top: 4px; }
+        
+        /* Bottom Bar */
+        .bottom-bar {
+            background: var(--panel);
+            border-top: 1px solid var(--border);
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .insert-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-right: 8px;
+        }
+        
+        .insert-btn {
+            padding: 6px 12px;
+            border: 1px solid var(--border);
+            background: var(--panel);
+            color: var(--text);
+            border-radius: 6px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.1s;
+        }
+        
+        .insert-btn:hover { background: var(--accent); color: white; border-color: var(--accent); }
+        
+        .bottom-info {
+            margin-left: auto;
+            display: flex;
+            gap: 16px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        
+        .zoom-controls { display: flex; align-items: center; gap: 4px; }
+        
+        .zoom-btn {
+            width: 24px;
+            height: 24px;
+            border: 1px solid var(--border);
+            background: var(--panel);
+            color: var(--text);
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .zoom-btn:hover { background: var(--bg); }
+        
+        @media (max-width: 1200px) { .right-panel { display: none; } }
+        @media (max-width: 900px) { .left-panel { display: none; } }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+            </svg>
+            Pro Book Editor
+        </div>
+        
+        <div class="doc-title">
+            <input type="text" id="docTitle" value="My Novel" placeholder="Book Title">
+            <span class="save-status" id="saveStatus">✓ Saved</span>
+        </div>
+        
+        <!-- Mode Controls - New Feature! -->
+        <div class="mode-controls">
+            <button class="mode-toggle" id="modeToggle" title="Toggle between General and Structured writing">
+                <span id="modeLabel">📝 General Mode</span>
+            </button>
+            <button class="feature-btn" id="focusToggle" title="Focus Tunnel - highlights active paragraph">
+                🎯 Focus
+            </button>
+            <button class="feature-btn" id="typewriterToggle" title="Typewriter Mode - keeps cursor centered">
+                ⌨️ Typewriter
+            </button>
+            <button class="feature-btn" id="soundToggle" title="Typewriter sounds">
+                🔇
+            </button>
+            <button class="feature-btn" id="styleLockToggle" title="Lock all style settings">
+                🔓 Lock Styles
+            </button>
+        </div>
+        
+        <div class="header-actions">
+            <button class="btn" id="newDocBtn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                    <line x1="12" y1="18" x2="12" y2="12"/>
+                    <line x1="9" y1="15" x2="15" y2="15"/>
+                </svg>
+                New
+            </button>
+            <button class="btn" id="themeBtn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/>
+                </svg>
+            </button>
+            <button class="btn btn-primary" id="exportBtn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                Export
+            </button>
+        </div>
+    </header>
+    
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <div class="tool-group">
+            <span class="tool-label">Style</span>
+            <select class="tool-select" id="writingPreset" style="width:130px">
+                <option value="classic">📖 Classic Book</option>
+                <option value="modern">✨ Modern Clean</option>
+                <option value="handwritten">✍️ Handwritten</option>
+                <option value="learning">📚 Learning</option>
+                <option value="screenplay">🎬 Screenplay</option>
+            </select>
+        </div>
+        
+        <div class="tool-group">
+            <select class="tool-select" id="fontFamily" style="width:130px"></select>
+            <select class="tool-select" id="fontSize" style="width:55px">
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12" selected>12</option>
+                <option value="14">14</option>
+                <option value="16">16</option>
+                <option value="18">18</option>
+                <option value="24">24</option>
+            </select>
+        </div>
+        
+        <div class="tool-group">
+            <button class="tool-btn" data-cmd="bold" title="Bold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 4h8a4 4 0 0 1 0 8H6V4zm0 8h9a4 4 0 0 1 0 8H6v-8z"/></svg></button>
+            <button class="tool-btn" data-cmd="italic" title="Italic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="4" x2="10" y2="4"/><line x1="14" y1="20" x2="5" y2="20"/><line x1="15" y1="4" x2="9" y2="20"/></svg></button>
+            <button class="tool-btn" data-cmd="underline" title="Underline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3v7a6 6 0 0 0 12 0V3"/><line x1="4" y1="21" x2="20" y2="21"/></svg></button>
+        </div>
+        
+        <div class="tool-group">
+            <button class="tool-btn" data-cmd="justifyLeft" title="Left"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="17" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="17" y1="18" x2="3" y2="18"/></svg></button>
+            <button class="tool-btn" data-cmd="justifyCenter" title="Center"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="10" x2="6" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="18" y1="18" x2="6" y2="18"/></svg></button>
+            <button class="tool-btn" data-cmd="justifyFull" title="Justify"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="21" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="21" y1="18" x2="3" y2="18"/></svg></button>
+        </div>
+        
+        <div class="tool-group">
+            <select class="tool-select" id="headingStyle" style="width:90px">
+                <option value="">Normal</option>
+                <option value="h1">Heading 1</option>
+                <option value="h2">Heading 2</option>
+                <option value="h3">Heading 3</option>
+            </select>
+            <select class="tool-select" id="lineHeight" style="width:55px">
+                <option value="1.5">1.5</option>
+                <option value="1.8" selected>1.8</option>
+                <option value="2">2.0</option>
+            </select>
+        </div>
+    </div>
+    
+    <!-- Main -->
+    <div class="main">
+        <!-- Left Panel -->
+        <aside class="left-panel">
+            <div class="panel-section">
+                <div class="panel-header">
+                    Pages
+                    <button id="addPage" title="Add Page">+</button>
+                </div>
+                <div class="panel-content" id="pageList">
+                    <div class="page-item active" data-page="0">
+                        <span class="num">1</span> Page 1
+                    </div>
+                </div>
+            </div>
+            
+            <div class="panel-section">
+                <div class="panel-header">Sections</div>
+                <div class="panel-content" id="sectionList">
+                    <div class="section-item" data-type="title-page">📄 Title Page</div>
+                    <div class="section-item" data-type="dedication">💝 Dedication</div>
+                    <div class="section-item" data-type="copyright">©️ Copyright</div>
+                    <div class="section-item" data-type="toc">📑 Contents</div>
+                    <div class="section-item" data-type="chapter">📖 Chapter</div>
+                    <div class="section-item" data-type="about">👤 About</div>
+                </div>
+            </div>
+            
+            <!-- Block Types (visible in structured mode) -->
+            <div class="panel-section" id="blockTypesPanel" style="display:none">
+                <div class="panel-header">Block Types</div>
+                <div class="panel-content" id="blockTypeList">
+                    <div class="section-item" data-block-type="text">📝 Text Block</div>
+                    <div class="section-item" data-block-type="quote">💬 Quote Block</div>
+                    <div class="section-item" data-block-type="note">📒 Note Block</div>
+                    <div class="section-item" data-block-type="learning">📚 Learning Block</div>
+                    <div class="section-item" data-block-type="image">🖼️ Image Block</div>
+                </div>
+            </div>
+        </aside>
+        
+        <!-- Editor -->
+        <main class="editor-area">
+            <div class="editor-scroll" id="editorScroll">
+                <div class="paper" id="paper" data-texture="cream">
+                    <div class="paper-inner">
+                        <div id="editorContainer" class="general-mode">
+                            <div class="editor" contenteditable="true" id="editor"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <!-- Right Panel -->
+        <aside class="right-panel">
+            <div class="control-group">
+                <div class="control-label">Page Size</div>
+                <select class="control-input" id="pageSize">
+                    <option value="6x9">6" × 9" (Novel)</option>
+                    <option value="5.5x8.5">5.5" × 8.5"</option>
+                    <option value="5x8">5" × 8"</option>
+                    <option value="8.5x11">8.5" × 11"</option>
+                    <option value="a4">A4</option>
+                    <option value="a5">A5</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <div class="control-label">Margins (in)</div>
+                <div class="control-row">
+                    <span class="unit">T</span>
+                    <input type="number" class="control-input control-input-sm" id="marginTop" value="1" step="0.25">
+                    <span class="unit">B</span>
+                    <input type="number" class="control-input control-input-sm" id="marginBottom" value="1" step="0.25">
+                </div>
+                <div class="control-row">
+                    <span class="unit">L</span>
+                    <input type="number" class="control-input control-input-sm" id="marginLeft" value="0.75" step="0.25">
+                    <span class="unit">R</span>
+                    <input type="number" class="control-input control-input-sm" id="marginRight" value="0.5" step="0.25">
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <div class="control-label">Statistics</div>
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-value" id="wordCount">0</div>
+                        <div class="stat-label">Words</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="charCount">0</div>
+                        <div class="stat-label">Chars</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="pageCount">1</div>
+                        <div class="stat-label">Pages</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="readTime">0</div>
+                        <div class="stat-label">Min</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <div class="control-label">Daily Goal</div>
+                <div class="control-row">
+                    <input type="number" class="control-input" id="wordGoal" value="1000">
+                    <span class="unit">words</span>
+                </div>
+                <div class="goal-bar">
+                    <div class="goal-progress" id="goalProgress"></div>
+                </div>
+                <div class="goal-text">
+                    <span id="goalCurrent">0 written</span>
+                    <span id="goalRemaining">1000 to go</span>
+                </div>
+            </div>
+        </aside>
+    </div>
+    
+    <!-- Bottom Bar -->
+    <footer class="bottom-bar">
+        <span class="insert-label">Insert:</span>
+        <button class="insert-btn" data-insert="title-page">📄 Title</button>
+        <button class="insert-btn" data-insert="chapter">📖 Chapter</button>
+        <button class="insert-btn" data-insert="pagebreak">📃 Break</button>
+        <button class="insert-btn" data-insert="scene-break">✦ Scene</button>
+        <button class="insert-btn" data-insert="quote">💬 Quote</button>
+        <button class="insert-btn" data-insert="image">🖼️ Image</button>
+        
+        <div class="bottom-info">
+            <div class="session-stats" id="sessionStats">
+                <span class="session-time">⏱ 0m</span>
+                <span class="session-words">✏️ +0</span>
+            </div>
+            <span class="reading-time" id="readingTime">📖 0 min read</span>
+            <span id="currentPage">Page 1 of 1</span>
+            <div class="zoom-controls">
+                <button class="zoom-btn" id="zoomOut">−</button>
+                <span id="zoomLevel">100%</span>
+                <button class="zoom-btn" id="zoomIn">+</button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Load Core Modules -->
+    <script src="core/state.js"></script>
+    <script src="core/styles.js"></script>
+    <script src="core/blocks.js"></script>
+    <script src="core/modes.js"></script>
+    <script src="core/block-editor.js"></script>
+    <script src="core/editor.js"></script>
+    <script src="core/pages.js"></script>
+    <script src="core/sections.js"></script>
+    <script src="core/wow-features.js"></script>
+    
+    <!-- Load UI Modules -->
+    <script src="ui/toolbar.js"></script>
+    <script src="ui/panels.js"></script>
+    <script src="ui/modals.js"></script>
+    
+    <!-- Load Export Modules -->
+    <script src="export/pdf.js"></script>
+    <script src="export/docx.js"></script>
+    <script src="export/epub.js"></script>
+    
+    <!-- Initialize App -->
+    <script>
+        // TXT Export
+        window.Export = window.Export || {};
+        window.Export.txt = function() {
+            const pages = AppState.document.pages;
+            const title = AppState.document.title || 'document';
+            const temp = document.createElement('div');
+            let text = '';
+            pages.forEach((page, i) => {
+                temp.innerHTML = page.content;
+                text += temp.innerText + '\n\n--- Page ' + (i + 2) + ' ---\n\n';
+            });
+            const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = title + '.txt';
+            a.click();
+            URL.revokeObjectURL(url);
+        };
+
+        // Listen for mode changes to show/hide block panel
+        document.addEventListener('modeChange', (e) => {
+            const blockPanel = document.getElementById('blockTypesPanel');
+            if (blockPanel) {
+                blockPanel.style.display = e.detail.mode === 'structured' ? 'block' : 'none';
+            }
+        });
+
+        // Initialize all modules
+        document.addEventListener('DOMContentLoaded', () => {
+            AppState.init();
+            Styles.init();
+            WritingModes.init();
+            Editor.init();
+            BlockEditor.init();
+            Pages.init();
+            Sections.init();
+            Toolbar.init();
+            Panels.init();
+            Modals.init();
+
+            Pages.render();
+            Pages.updateInfo();
+            Editor.updateStats();
+            
+            // Initialize WOW features
+            if (window.WowFeatures) {
+                WowFeatures.init();
+            }
+            
+            console.log('✨ Pro Book Editor loaded with WOW features!');
+            console.log('💡 Tip: Type "/" to open quick insert menu (Notion-style)');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+{
+    "version": "0.2",
+    "language": "en",
+    "words": [
+        "proeditor",
+        "pagebreak",
+        "Merriweather",
+        "Playfair",
+        "Lato",
+        "Pacifico",
+        "Kalam",
+        "Fira",
+        "Caveat",
+        "Roboto",
+        "Garamond",
+        "Lora",
+        "wght",
+        "ital",
+        "childrens",
+        "contenteditable",
+        "execCommand",
+        "glassmorphism",
+        "colnum",
+        "docx",
+        "epub",
+        "dropdown"
+    ],
+    "ignorePaths": [
+        "node_modules/**",
+        "*.min.js",
+        "*.min.css"
+    ]
+}

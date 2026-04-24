@@ -1,0 +1,405 @@
+/**
+ * Pro Book Editor - Block Styles (REFINED & ELEGANT)
+ * 
+ * Design Philosophy:
+ * - Invisible by default
+ * - Whisper-thin indicators on hover
+ * - Controls feel like soft suggestions, not rigid boxes
+ * - Premium, print-like experience
+ */
+
+/* ===== BLOCK CONTAINER ===== */
+.block {
+    position: relative;
+    margin: 0 auto 16px auto;
+}
+
+.block.align-left { margin-left: 0; margin-right: auto; }
+.block.align-center { margin-left: auto; margin-right: auto; }
+.block.align-right { margin-left: auto; margin-right: 0; }
+
+/* ===== CONTENT LAYER (SACRED) ===== */
+.block-content {
+    outline: none;
+    min-height: 1.5em;
+}
+
+.block-content:empty::before {
+    content: attr(data-placeholder);
+    color: var(--text-muted);
+    font-style: italic;
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+/* ===== UI LAYER - ELEGANT MINIMAL OUTLINE ===== */
+.block-outline {
+    position: absolute;
+    inset: -2px;
+    border-radius: 3px;
+    pointer-events: none;
+    z-index: 1;
+    /* Invisible by default */
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+/* Subtle left-edge indicator instead of full border */
+.block-outline::before {
+    content: '';
+    position: absolute;
+    left: -6px;
+    top: 4px;
+    bottom: 4px;
+    width: 3px;
+    background: var(--accent);
+    border-radius: 2px;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+}
+
+/* ===== CONTROLS - FLOATING PILL STYLE ===== */
+.block-controls {
+    position: absolute;
+    top: -8px;
+    right: 0;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 4px 8px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-4px) scale(0.95);
+    transition: all 0.15s ease;
+    z-index: 100;
+    pointer-events: none;
+}
+
+.block-type-label {
+    font-size: 0.65rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    padding-right: 6px;
+    border-right: 1px solid var(--border);
+    margin-right: 4px;
+}
+
+.block-actions {
+    display: flex;
+    gap: 1px;
+}
+
+.block-btn {
+    width: 22px;
+    height: 22px;
+    border: none;
+    background: transparent;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.1s;
+}
+
+.block-btn:hover {
+    background: var(--bg);
+    color: var(--accent);
+}
+
+.block-btn-delete:hover {
+    background: #fef2f2;
+    color: #ef4444;
+}
+
+/* ===== RESIZE HANDLE - ELEGANT DOT ===== */
+.block-resize-handle {
+    position: absolute;
+    right: -3px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 24px;
+    background: var(--accent);
+    border-radius: 3px;
+    cursor: ew-resize;
+    opacity: 0;
+    transition: opacity 0.15s;
+    z-index: 10;
+}
+
+/* ===== GENERAL MODE - PURE PRINT EXPERIENCE ===== */
+.general-mode .block-outline,
+.general-mode .block-controls,
+.general-mode .block-resize-handle,
+.general-mode .add-block-zone {
+    display: none !important;
+}
+
+/* ===== STRUCTURED MODE - HOVER REVEALS SUBTLE UI ===== */
+
+/* Show left accent bar on hover */
+.structured-mode .block:hover .block-outline::before {
+    opacity: 1;
+}
+
+/* Show floating controls */
+.structured-mode .block:hover .block-controls {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+/* Show resize handle */
+.structured-mode .block:hover .block-resize-handle {
+    opacity: 0.4;
+}
+
+.structured-mode .block:hover .block-resize-handle:hover {
+    opacity: 1;
+}
+
+/* Active block - subtle accent */
+.structured-mode .block.is-active .block-outline::before {
+    opacity: 1;
+}
+
+/* ===== BLOCK TYPE STYLES ===== */
+
+/* Title block */
+.block-title .block-content {
+    font-size: 24pt;
+    font-weight: 600;
+    text-align: center;
+}
+
+.block-title.align-left .block-content { text-align: left; }
+.block-title.align-right .block-content { text-align: right; }
+
+/* Text block with indent */
+.block-text.has-indent .block-content p:first-child,
+.block-text.has-indent .block-content > *:first-child {
+    text-indent: 1.5em;
+}
+
+/* Quote block - elegant styling */
+.block-quote {
+    padding: 16px 24px;
+    border-left: 3px solid var(--accent);
+    margin-left: 24px;
+    margin-right: 24px;
+}
+
+.block-quote .block-content {
+    font-style: italic;
+    font-size: 13pt;
+}
+
+/* Note block - soft highlight */
+.block-note {
+    padding: 16px 20px;
+    border-radius: 6px;
+    background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%);
+    border-left: 3px solid #eab308;
+}
+
+[data-theme="dark"] .block-note {
+    background: linear-gradient(135deg, rgba(254, 252, 232, 0.08) 0%, rgba(254, 249, 195, 0.05) 100%);
+}
+
+/* Learning block */
+.block-learning {
+    padding: 16px 20px;
+    border-radius: 6px;
+    background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+    border-left: 3px solid #10b981;
+}
+
+[data-theme="dark"] .block-learning {
+    background: linear-gradient(135deg, rgba(236, 253, 245, 0.08) 0%, rgba(209, 250, 229, 0.05) 100%);
+}
+
+/* Image block */
+.block-image {
+    padding: 32px;
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+    text-align: center;
+    background: var(--bg);
+}
+
+.block-image .block-content {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+/* ===== ADD BLOCK - MINIMAL INLINE ===== */
+.add-block-zone {
+    padding: 16px;
+    text-align: center;
+}
+
+.general-mode .add-block-zone { display: none; }
+.structured-mode .add-block-zone { display: block; }
+
+.add-block-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border: 1px dashed var(--border);
+    background: transparent;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.add-block-btn:hover {
+    border-color: var(--accent);
+    border-style: solid;
+    color: var(--accent);
+    background: rgba(37, 99, 235, 0.03);
+}
+
+.add-block-menu {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 100%;
+    margin-bottom: 8px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 8px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    width: 260px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+    z-index: 1000;
+}
+
+.add-block-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 12px 8px;
+    border: none;
+    background: transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.1s;
+}
+
+.add-block-option:hover {
+    background: var(--accent);
+    color: white;
+}
+
+.add-block-option .icon { font-size: 1.3rem; }
+.add-block-option .label { font-size: 0.7rem; font-weight: 500; }
+
+/* ===== FOCUS MODE (ADDITIVE EMPHASIS) ===== */
+.focus-tunnel .block.is-active {
+    position: relative;
+}
+
+.focus-tunnel .block.is-active::after {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border: 2px solid var(--accent);
+    border-radius: 8px;
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+/* ===== PAGE TEXTURES ===== */
+.paper[data-texture="cream"] { background: #fefdfb; }
+.paper[data-texture="white"] { background: #ffffff; }
+.paper[data-texture="lined"] {
+    background: 
+        repeating-linear-gradient(
+            transparent,
+            transparent 31px,
+            #e8e8e8 31px,
+            #e8e8e8 32px
+        ),
+        #fffff8;
+}
+
+[data-theme="dark"] .paper[data-texture="cream"] { background: #2a2a28; }
+[data-theme="dark"] .paper[data-texture="white"] { background: var(--paper); }
+[data-theme="dark"] .paper[data-texture="lined"] {
+    background: 
+        repeating-linear-gradient(
+            transparent,
+            transparent 31px,
+            #3a3a3a 31px,
+            #3a3a3a 32px
+        ),
+        #252528;
+}
+
+/* ===== LOCKED STATE ===== */
+.block.is-locked .block-content {
+    cursor: default;
+}
+
+.block.is-locked::after {
+    content: '🔒';
+    position: absolute;
+    top: 0;
+    right: 4px;
+    font-size: 0.6rem;
+    opacity: 0.3;
+}
+
+.styles-locked .tool-group {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+/* ===== PRINT ===== */
+@media print {
+    .block-outline,
+    .block-controls,
+    .block-resize-handle,
+    .add-block-zone {
+        display: none !important;
+    }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 800px) {
+    .block-controls {
+        position: static;
+        transform: none;
+        margin-bottom: 8px;
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        border-radius: 8px;
+    }
+}
+
+/* ===== DARK MODE REFINEMENTS ===== */
+[data-theme="dark"] .block-controls {
+    background: var(--panel);
+    border-color: var(--border);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+[data-theme="dark"] .add-block-menu {
+    box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+}

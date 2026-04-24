@@ -1,0 +1,438 @@
+/* ============================================
+   Document Writer - Editor Styles
+   Word-like Document Canvas
+   ============================================ */
+
+.editor-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    overflow: auto;
+    padding: var(--space-8);
+    background: var(--surface-bg);
+}
+
+.editor-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    transform-origin: top center;
+    transition: transform var(--transition-normal);
+}
+
+/* Page Styling - Default 6x9 (Most Popular for Novels) */
+.page {
+    position: relative;
+    width: 6in;
+    min-height: 9in;
+    background: #ffffff;
+    box-shadow: var(--shadow-page);
+    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+    transition: all var(--transition-normal);
+}
+
+/* ============================================
+   Amazon KDP & Professional Book Sizes
+   ============================================ */
+
+/* Popular Novel Sizes */
+.page[data-size="6x9"] { width: 6in; min-height: 9in; }
+.page[data-size="5.5x8.5"] { width: 5.5in; min-height: 8.5in; }
+.page[data-size="5x8"] { width: 5in; min-height: 8in; }
+.page[data-size="5.25x8"] { width: 5.25in; min-height: 8in; }
+
+/* Amazon KDP Extended Sizes */
+.page[data-size="6.14x9.21"] { width: 6.14in; min-height: 9.21in; }
+.page[data-size="6.69x9.61"] { width: 6.69in; min-height: 9.61in; }
+.page[data-size="7x10"] { width: 7in; min-height: 10in; }
+.page[data-size="7.5x9.25"] { width: 7.5in; min-height: 9.25in; }
+.page[data-size="8x10"] { width: 8in; min-height: 10in; }
+.page[data-size="8.5x8.5"] { width: 8.5in; min-height: 8.5in; }
+.page[data-size="8.25x6"] { width: 8.25in; min-height: 6in; }
+.page[data-size="8.5x11"] { width: 8.5in; min-height: 11in; }
+
+/* International Standard Sizes */
+.page[data-size="a4"] { width: 210mm; min-height: 297mm; }
+.page[data-size="a5"] { width: 148mm; min-height: 210mm; }
+.page[data-size="b5"] { width: 176mm; min-height: 250mm; }
+
+/* Page Size Info Badge */
+.page::before {
+    content: attr(data-size-label);
+    position: absolute;
+    top: -24px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 2px 12px;
+    font-size: 11px;
+    font-family: var(--font-sans);
+    color: var(--text-tertiary);
+    background: var(--surface-card);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-full);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+}
+
+.page:hover::before {
+    opacity: 1;
+}
+
+[data-theme="dark"] .page {
+    background: #1e1e1e;
+}
+
+/* Page Header */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5in 1in 0;
+    font-size: var(--text-sm);
+    color: var(--text-tertiary);
+    min-height: 0.5in;
+}
+
+.page-header span {
+    flex: 1;
+}
+
+.page-header .header-center {
+    text-align: center;
+}
+
+.page-header .header-right {
+    text-align: right;
+}
+
+.page-header [contenteditable]:focus {
+    outline: none;
+    background: var(--primary-50);
+    border-radius: var(--radius-sm);
+}
+
+[data-theme="dark"] .page-header [contenteditable]:focus {
+    background: rgba(43, 87, 154, 0.2);
+}
+
+/* Page Content - Main Editor Area */
+.page-content {
+    flex: 1;
+    padding: 0 1in 0.5in;
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: 12pt;
+    line-height: 1.5;
+    color: #000000;
+    outline: none;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+}
+
+[data-theme="dark"] .page-content {
+    color: #e0e0e0;
+}
+
+.page-content:empty::before {
+    content: attr(data-placeholder);
+    color: var(--text-tertiary);
+    font-style: italic;
+    pointer-events: none;
+}
+
+.page-content:focus {
+    outline: none;
+}
+
+/* Page Footer */
+.page-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1in 0.5in;
+    font-size: var(--text-sm);
+    color: var(--text-tertiary);
+    min-height: 0.5in;
+}
+
+.page-footer span {
+    flex: 1;
+}
+
+.page-footer .footer-center {
+    text-align: center;
+}
+
+.page-footer .footer-right {
+    text-align: right;
+}
+
+.page-number {
+    font-variant-numeric: tabular-nums;
+}
+
+/* Content Styling */
+.page-content h1 {
+    font-size: 24pt;
+    font-weight: 700;
+    margin-bottom: 0.5em;
+    line-height: 1.2;
+    page-break-after: avoid;
+}
+
+.page-content h2 {
+    font-size: 18pt;
+    font-weight: 600;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+    line-height: 1.3;
+    page-break-after: avoid;
+}
+
+.page-content h3 {
+    font-size: 14pt;
+    font-weight: 600;
+    margin-top: 0.8em;
+    margin-bottom: 0.4em;
+    line-height: 1.4;
+}
+
+.page-content h4 {
+    font-size: 12pt;
+    font-weight: 600;
+    margin-top: 0.8em;
+    margin-bottom: 0.3em;
+}
+
+.page-content h5, .page-content h6 {
+    font-size: 11pt;
+    font-weight: 600;
+    margin-top: 0.6em;
+    margin-bottom: 0.3em;
+}
+
+.page-content p {
+    margin-bottom: 0.8em;
+    text-indent: 0;
+}
+
+.page-content p.indent {
+    text-indent: 0.5in;
+}
+
+/* Lists */
+.page-content ul,
+.page-content ol {
+    margin-left: 0.5in;
+    margin-bottom: 0.8em;
+}
+
+.page-content li {
+    margin-bottom: 0.3em;
+}
+
+/* Blockquote */
+.page-content blockquote {
+    margin: 1em 0.5in;
+    padding-left: 0.5in;
+    border-left: 3px solid var(--gray-300);
+    color: var(--gray-600);
+    font-style: italic;
+}
+
+[data-theme="dark"] .page-content blockquote {
+    border-left-color: var(--gray-600);
+    color: var(--gray-400);
+}
+
+/* Links */
+.page-content a {
+    color: var(--primary-500);
+    text-decoration: underline;
+}
+
+.page-content a:hover {
+    color: var(--primary-600);
+}
+
+/* Tables */
+.page-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1em 0;
+}
+
+.page-content th,
+.page-content td {
+    border: 1px solid var(--gray-300);
+    padding: 8px 12px;
+    text-align: left;
+}
+
+.page-content th {
+    background: var(--gray-100);
+    font-weight: 600;
+}
+
+[data-theme="dark"] .page-content th {
+    background: var(--gray-700);
+}
+
+[data-theme="dark"] .page-content th,
+[data-theme="dark"] .page-content td {
+    border-color: var(--gray-600);
+}
+
+/* Images */
+.page-content img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1em auto;
+    border-radius: var(--radius-sm);
+}
+
+.page-content img.align-left {
+    float: left;
+    margin: 0.5em 1em 0.5em 0;
+}
+
+.page-content img.align-right {
+    float: right;
+    margin: 0.5em 0 0.5em 1em;
+}
+
+/* Page Break */
+.page-break {
+    page-break-after: always;
+    break-after: page;
+    border-top: 2px dashed var(--gray-300);
+    margin: 2em 0;
+    position: relative;
+}
+
+.page-break::after {
+    content: 'Page Break';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 0 var(--space-2);
+    font-size: var(--text-xs);
+    color: var(--text-tertiary);
+    background: #ffffff;
+}
+
+[data-theme="dark"] .page-break::after {
+    background: #1e1e1e;
+}
+
+/* Chapter Title Styling */
+.chapter-title-block {
+    text-align: center;
+    padding: 2in 0 1in;
+}
+
+.chapter-title-block h1 {
+    font-size: 28pt;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+/* Dropcap for first letter */
+.dropcap::first-letter {
+    float: left;
+    font-size: 4em;
+    line-height: 0.8;
+    padding-right: 0.1em;
+    font-weight: 400;
+}
+
+/* Print Styles */
+@media print {
+    .page {
+        box-shadow: none;
+        margin: 0;
+        page-break-after: always;
+    }
+    
+    .page-break {
+        visibility: hidden;
+        page-break-after: always;
+    }
+}
+
+/* Responsive Editor */
+@media (max-width: 1200px) {
+    .page {
+        width: 100%;
+        max-width: 8.5in;
+    }
+}
+
+@media (max-width: 768px) {
+    .editor-container {
+        padding: var(--space-4);
+    }
+    
+    .page {
+        min-height: auto;
+    }
+    
+    .page-content {
+        padding: 0 0.5in 0.5in;
+    }
+    
+    .page-header,
+    .page-footer {
+        padding-left: 0.5in;
+        padding-right: 0.5in;
+    }
+}
+
+/* Cursor and Selection */
+.page-content ::selection {
+    background: var(--primary-200);
+}
+
+[data-theme="dark"] .page-content ::selection {
+    background: var(--primary-600);
+    color: white;
+}
+
+/* Focus indicator for accessibility */
+.page:focus-within {
+    box-shadow: var(--shadow-page), 0 0 0 2px var(--primary-400);
+}
+
+/* Ruler (optional visual guide) */
+.ruler {
+    position: absolute;
+    top: 0;
+    left: 1in;
+    right: 1in;
+    height: 24px;
+    background: var(--gray-100);
+    border-bottom: 1px solid var(--border-medium);
+    font-size: 10px;
+    color: var(--text-tertiary);
+}
+
+/* Line numbers (optional) */
+.page-content.show-line-numbers {
+    counter-reset: line;
+}
+
+.page-content.show-line-numbers > p::before {
+    counter-increment: line;
+    content: counter(line);
+    position: absolute;
+    left: 0.3in;
+    color: var(--text-tertiary);
+    font-size: 10pt;
+    font-family: var(--font-mono);
+}

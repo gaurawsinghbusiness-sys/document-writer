@@ -1,0 +1,362 @@
+/* ============================================
+   Image Manager Styles
+   ============================================ */
+.img-figure {
+  display: block;
+  margin: 1.2em 0;
+  position: relative;
+  user-select: none;
+}
+.img-figure.img-align-left  { float: left; margin-right: 1.5em; margin-bottom: 0.5em; max-width: 50%; }
+.img-figure.img-align-right { float: right; margin-left: 1.5em; margin-bottom: 0.5em; max-width: 50%; }
+.img-figure.img-align-center { text-align: center; clear: both; }
+.img-figure.img-align-full  { clear: both; width: 100%; }
+
+.img-wrapper {
+  display: inline-block;
+  position: relative;
+  max-width: 100%;
+}
+.img-figure.img-align-center .img-wrapper { display: inline-block; }
+.img-figure.img-align-full .img-wrapper { display: block; width: 100%; }
+
+.img-wrapper img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  cursor: default;
+}
+
+/* Resize handle */
+.img-resize-br {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 14px;
+  height: 14px;
+  background: var(--primary-500);
+  border-radius: 3px 0 3px 0;
+  cursor: se-resize;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.img-figure.active .img-resize-br,
+.writer-mode .img-figure:hover .img-resize-br { opacity: 1; }
+
+/* Controls overlay */
+.img-controls {
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  background: rgba(0,0,0,0.72);
+  border-radius: 8px;
+  padding: 4px 6px;
+  opacity: 0;
+  transition: opacity 0.15s;
+  white-space: nowrap;
+  z-index: 10;
+}
+.img-figure.active .img-controls,
+.writer-mode .img-figure:hover .img-controls { opacity: 1; }
+
+.img-ctrl-btn {
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 0.75rem;
+  padding: 2px 5px;
+  border-radius: 4px;
+  line-height: 1;
+}
+.img-ctrl-btn:hover { background: rgba(255,255,255,0.15); }
+.img-ctrl-sep { width: 1px; height: 14px; background: rgba(255,255,255,0.2); margin: 0 2px; }
+
+/* Caption */
+.img-caption {
+  display: block;
+  text-align: center;
+  font-size: 0.8em;
+  color: var(--text-tertiary);
+  font-style: italic;
+  margin-top: 6px;
+  outline: none;
+  min-height: 1em;
+}
+.img-caption:empty::before {
+  content: attr(placeholder);
+  color: var(--text-tertiary);
+  opacity: 0.5;
+  pointer-events: none;
+}
+/* Hide caption placeholder in export preview */
+.export-preview .img-caption:empty { display: none; }
+.export-preview .img-controls,
+.export-preview .img-resize-br { display: none !important; }
+
+/* ============================================
+   Zen / Focus Mode — True Distraction-Free
+   ============================================ */
+
+/* ── Full-screen takeover ─────────────────── */
+.zen-mode body {
+  overflow: hidden;
+}
+
+/* Hide all chrome — slide OUT (not just fade) */
+.zen-mode .app-header {
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.35s cubic-bezier(0.4,0,0.2,1),
+              opacity 0.35s ease;
+}
+.zen-mode .toolbar {
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.35s cubic-bezier(0.4,0,0.2,1),
+              opacity 0.35s ease;
+}
+.zen-mode .sidebar,
+.zen-mode .status-bar,
+.zen-mode .margin-controls,
+.zen-mode .ruler-bar,
+.zen-mode .export-preview-banner {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+/* ── Reveal only when mouse near top edge ──
+   (controlled by JS adding .zen-peek class) */
+.zen-mode.zen-peek .app-header {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+.zen-mode.zen-peek .toolbar {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ── Editor canvas ───────────────────────── */
+.zen-mode .editor-container {
+  background: #1a1410 !important;  /* warm dark, not cold black */
+  position: fixed !important;
+  inset: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60px 40px 80px !important;
+  z-index: 500;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.1) transparent;
+}
+
+/* ── Page itself ─────────────────────────── */
+.zen-mode .page {
+  max-width: 700px !important;
+  width: 100% !important;
+  box-shadow: 0 0 80px rgba(255, 220, 140, 0.06),
+              0 0 0 1px rgba(255,255,255,0.04),
+              0 20px 60px rgba(0,0,0,0.5) !important;
+  border-radius: 4px !important;
+  transition: box-shadow 0.3s ease;
+}
+
+/* Warm paper glow when typing (JS adds .zen-typing) */
+.zen-mode.zen-typing .page {
+  box-shadow: 0 0 100px rgba(255, 200, 100, 0.08),
+              0 0 0 1px rgba(255,255,255,0.05),
+              0 20px 60px rgba(0,0,0,0.5) !important;
+}
+
+/* ── Floating minimal HUD ────────────────── */
+.zen-hud {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 24px;
+  padding: 8px 20px;
+  z-index: 600;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+.zen-mode .zen-hud {
+  opacity: 1;
+  pointer-events: auto;
+}
+.zen-hud-stat {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.45);
+  font-family: var(--font-sans);
+  letter-spacing: 0.03em;
+}
+.zen-hud-stat span {
+  color: rgba(255,255,255,0.75);
+  font-weight: 600;
+}
+.zen-hud-sep {
+  width: 1px;
+  height: 12px;
+  background: rgba(255,255,255,0.1);
+}
+.zen-exit-btn {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 12px;
+  color: rgba(255,255,255,0.4);
+  font-size: 0.68rem;
+  padding: 3px 10px;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: var(--font-sans);
+}
+.zen-exit-btn:hover {
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.8);
+  border-color: rgba(255,255,255,0.3);
+}
+
+/* ── Ambient top-edge peek zone ──────────── */
+.zen-peek-zone {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  z-index: 510;
+  cursor: default;
+}
+
+/* ── Typewriter mode — active line centered ─ */
+.zen-mode .page-content {
+  padding-bottom: 45vh !important;
+}
+
+/* ── Focus fade — dim non-focused paragraphs ─
+   (JS adds .zen-focus-para class on editor) */
+.zen-focus .page-content > *:not(:focus-within) {
+  opacity: 0.35;
+  transition: opacity 0.4s ease;
+}
+.zen-focus .page-content > *:focus-within {
+  opacity: 1;
+}
+
+/* ============================================
+   Research / Notes Panel
+   ============================================ */
+.notes-panel {
+  position: fixed;
+  top: 0;
+  right: -380px;
+  width: 360px;
+  height: 100vh;
+  background: var(--surface-card);
+  border-left: 1px solid var(--border-light);
+  box-shadow: -6px 0 24px rgba(0,0,0,0.1);
+  z-index: 900;
+  transition: right 0.3s cubic-bezier(0.4,0,0.2,1);
+  display: flex;
+  flex-direction: column;
+}
+.notes-panel.open { right: 0; }
+
+.notes-panel-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-light);
+  flex-shrink: 0;
+}
+.notes-panel-header h3 {
+  flex: 1;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.notes-panel-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.notes-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border-light);
+  flex-shrink: 0;
+}
+.notes-tab {
+  flex: 1;
+  padding: 10px 8px;
+  border: none;
+  background: transparent;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.15s;
+  font-family: var(--font-sans);
+}
+.notes-tab.active {
+  color: var(--primary-500);
+  border-bottom-color: var(--primary-500);
+}
+.notes-tab:hover:not(.active) { color: var(--text-primary); }
+
+.notes-content {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.notes-tab-pane {
+  display: none;
+  height: 100%;
+}
+.notes-tab-pane.active { display: flex; }
+
+.notes-textarea {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  resize: none;
+  padding: 16px 20px;
+  font-size: 0.82rem;
+  line-height: 1.7;
+  font-family: var(--font-sans);
+  background: var(--surface-card);
+  color: var(--text-primary);
+  box-sizing: border-box;
+}
+.notes-textarea::placeholder { color: var(--text-tertiary); }
+
+.notes-footer {
+  padding: 10px 20px;
+  border-top: 1px solid var(--border-light);
+  flex-shrink: 0;
+}

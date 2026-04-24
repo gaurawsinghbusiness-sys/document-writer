@@ -1,0 +1,174 @@
+{
+  "templates": [
+    {
+      "id": "report",
+      "name": "Report Writing",
+      "description": "Professional report format with clean structure",
+      "category": "Non-Fiction",
+      "icon": "📊",
+      "styles": {
+        "fontFamily": "Inter",
+        "fontSize": 11,
+        "lineHeight": 1.5,
+        "textAlign": "left",
+        "pageSize": "8.5x11",
+        "firstLineIndent": "0"
+      },
+      "sections": [
+        { "type": "cover", "title": "Cover Page" },
+        { "type": "executive-summary", "title": "Executive Summary" },
+        { "type": "toc", "title": "Table of Contents" },
+        { "type": "introduction", "title": "1. Introduction" },
+        { "type": "methodology", "title": "2. Methodology" },
+        { "type": "findings", "title": "3. Findings" },
+        { "type": "conclusion", "title": "4. Conclusion" },
+        { "type": "references", "title": "References" },
+        { "type": "appendix", "title": "Appendix" }
+      ],
+      "sampleContent": "<h1 style='text-align:center;margin-top:3in'>{{title}}</h1><p style='text-align:center;margin-top:1em'>Prepared by: {{author}}</p><p style='text-align:center'>{{date}}</p>"
+    },
+    {
+      "id": "learning",
+      "name": "Learning Document",
+      "description": "Educational materials with clear headings",
+      "category": "Non-Fiction",
+      "icon": "📚",
+      "styles": {
+        "fontFamily": "Open Sans",
+        "fontSize": 11,
+        "lineHeight": 1.6,
+        "textAlign": "left",
+        "pageSize": "a4",
+        "firstLineIndent": "0"
+      },
+      "sections": [
+        { "type": "title-page", "title": "Title Page" },
+        { "type": "objectives", "title": "Learning Objectives" },
+        { "type": "lesson", "title": "Lesson 1" },
+        { "type": "exercises", "title": "Exercises" },
+        { "type": "summary", "title": "Summary" },
+        { "type": "quiz", "title": "Quiz" }
+      ],
+      "sampleContent": "<h1>{{title}}</h1><h2>Learning Objectives</h2><ul><li>Objective 1</li><li>Objective 2</li><li>Objective 3</li></ul>"
+    },
+    {
+      "id": "textbook",
+      "name": "Textbook",
+      "description": "Academic textbook with chapters and exercises",
+      "category": "Non-Fiction",
+      "icon": "📖",
+      "styles": {
+        "fontFamily": "Source Sans 3",
+        "fontSize": 11,
+        "lineHeight": 1.5,
+        "textAlign": "justify",
+        "pageSize": "7x10",
+        "firstLineIndent": "0"
+      },
+      "sections": [
+        { "type": "title-page", "title": "Title Page" },
+        { "type": "preface", "title": "Preface" },
+        { "type": "toc", "title": "Contents" },
+        { "type": "chapter", "title": "Chapter 1" },
+        { "type": "review", "title": "Chapter Review" },
+        { "type": "glossary", "title": "Glossary" },
+        { "type": "index", "title": "Index" }
+      ],
+      "sampleContent": "<h1 style='text-align:center'>{{title}}</h1><h2 style='text-align:center'>A Comprehensive Guide</h2>"
+    },
+    {
+      "id": "memoir",
+      "name": "Memoir/Autobiography",
+      "description": "Personal narrative with elegant styling",
+      "category": "Non-Fiction",
+      "icon": "📝",
+      "styles": {
+        "fontFamily": "Merriweather",
+        "fontSize": 12,
+        "lineHeight": 1.8,
+        "textAlign": "justify",
+        "pageSize": "6x9",
+        "firstLineIndent": "1.5em"
+      },
+      "sections": [
+        { "type": "title-page", "title": "Title Page" },
+        { "type": "dedication", "title": "Dedication" },
+        { "type": "preface", "title": "Preface" },
+        { "type": "chapter", "title": "Chapter 1" },
+        { "type": "epilogue", "title": "Epilogue" },
+        { "type": "acknowledgments", "title": "Acknowledgments" }
+      ],
+      "sampleContent": "<h1 style='text-align:center;font-style:italic'>{{title}}</h1><p style='text-align:center'>A Memoir</p>"
+    },
+    {
+      "id": "self-help",
+      "name": "Self-Help/Guide",
+      "description": "Practical guide with action steps",
+      "category": "Non-Fiction",
+      "icon": "💡",
+      "styles": {
+        "fontFamily": "Lato",
+        "fontSize": 11,
+        "lineHeight": 1.6,
+        "textAlign": "left",
+        "pageSize": "6x9",
+        "firstLineIndent": "0"
+      },
+      "sections": [
+        { "type": "title-page", "title": "Title Page" },
+        { "type": "introduction", "title": "Introduction" },
+        { "type": "chapter", "title": "Step 1" },
+        { "type": "action-items", "title": "Action Items" },
+        { "type": "resources", "title": "Resources" }
+      ],
+      "sampleContent": "<h1 style='text-align:center'>{{title}}</h1><p style='text-align:center'>Your Complete Guide to...</p>"
+    },
+    {
+      "id": "cookbook",
+      "name": "Cookbook/Recipe Book",
+      "description": "Recipe format with ingredients and steps",
+      "category": "Non-Fiction",
+      "icon": "🍳",
+      "styles": {
+        "fontFamily": "Roboto",
+        "fontSize": 11,
+        "lineHeight": 1.5,
+        "textAlign": "left",
+        "pageSize": "8.5x11",
+        "firstLineIndent": "0"
+      },
+      "sections": [
+        { "type": "title-page", "title": "Title Page" },
+        { "type": "introduction", "title": "Introduction" },
+        { "type": "recipe-category", "title": "Appetizers" },
+        { "type": "recipe", "title": "Recipe" },
+        { "type": "index", "title": "Recipe Index" }
+      ],
+      "sampleContent": "<h1 style='text-align:center'>{{title}}</h1><p style='text-align:center'>Delicious Recipes by {{author}}</p>"
+    },
+    {
+      "id": "business",
+      "name": "Business Plan",
+      "description": "Professional business document format",
+      "category": "Non-Fiction",
+      "icon": "💼",
+      "styles": {
+        "fontFamily": "Inter",
+        "fontSize": 11,
+        "lineHeight": 1.5,
+        "textAlign": "left",
+        "pageSize": "8.5x11",
+        "firstLineIndent": "0"
+      },
+      "sections": [
+        { "type": "cover", "title": "Cover Page" },
+        { "type": "executive-summary", "title": "Executive Summary" },
+        { "type": "company-overview", "title": "Company Overview" },
+        { "type": "market-analysis", "title": "Market Analysis" },
+        { "type": "financial", "title": "Financial Projections" },
+        { "type": "appendix", "title": "Appendix" }
+      ],
+      "sampleContent": "<h1 style='text-align:center;margin-top:3in'>{{title}}</h1><h2 style='text-align:center'>Business Plan</h2>"
+    }
+  ]
+}
