@@ -22,3 +22,6 @@ build/
 
 # Temp
 *.tmp
+
+# Local Netlify folder
+.netlify

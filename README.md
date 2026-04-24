@@ -2,6 +2,8 @@
 
 > A professional-grade, browser-based book writing suite — write, format, and publish like a pro.
 
+🌐 **Live:** [documentriter.netlify.app](https://documentriter.netlify.app/)
+
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/gaurawsinghbusiness-sys/document-writer)
 
 ---
