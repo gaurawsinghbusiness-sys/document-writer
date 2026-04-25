@@ -27,8 +27,14 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Serif & Sans fonts -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Georgia&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&family=Playfair+Display:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&family=Playfair+Display:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Handwritten fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Dancing+Script:wght@400;600;700&family=Pacifico&family=Sacramento&family=Patrick+Hand&family=Indie+Flower&family=Shadows+Into+Light&family=Permanent+Marker&family=Amatic+SC:wght@400;700&family=Kaushan+Script&family=Satisfy&family=Courgette&display=swap"
       rel="stylesheet"
     />
 
@@ -204,15 +210,36 @@
 
         <div class="toolbar-group">
           <select class="toolbar-select" id="fontFamily" title="Font Family">
-            <option value="Georgia">Georgia</option>
-            <option value="Times New Roman">Times New Roman</option>
-            <option value="Merriweather">Merriweather</option>
-            <option value="Playfair Display">Playfair Display</option>
-            <option value="Arial">Arial</option>
-            <option value="Helvetica">Helvetica</option>
-            <option value="Inter">Inter</option>
-            <option value="Verdana">Verdana</option>
-            <option value="Courier New">Courier New</option>
+            <optgroup label="— Serif">
+              <option value="Georgia">Georgia</option>
+              <option value="Times New Roman">Times New Roman</option>
+              <option value="Merriweather">Merriweather</option>
+              <option value="Playfair Display">Playfair Display</option>
+            </optgroup>
+            <optgroup label="— Sans-Serif">
+              <option value="Arial">Arial</option>
+              <option value="Helvetica">Helvetica</option>
+              <option value="Inter">Inter</option>
+              <option value="Verdana">Verdana</option>
+            </optgroup>
+            <optgroup label="— Monospace">
+              <option value="Courier New">Courier New</option>
+              <option value="monospace">Monospace</option>
+            </optgroup>
+            <optgroup label="✍ Handwritten">
+              <option value="Caveat">Caveat</option>
+              <option value="Dancing Script">Dancing Script</option>
+              <option value="Pacifico">Pacifico</option>
+              <option value="Sacramento">Sacramento</option>
+              <option value="Patrick Hand">Patrick Hand</option>
+              <option value="Indie Flower">Indie Flower</option>
+              <option value="Shadows Into Light">Shadows Into Light</option>
+              <option value="Permanent Marker">Permanent Marker</option>
+              <option value="Amatic SC">Amatic SC</option>
+              <option value="Kaushan Script">Kaushan Script</option>
+              <option value="Satisfy">Satisfy</option>
+              <option value="Courgette">Courgette</option>
+            </optgroup>
           </select>
           <select
             class="toolbar-select toolbar-select-sm"

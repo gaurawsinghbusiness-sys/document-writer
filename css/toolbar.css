@@ -94,6 +94,7 @@
     background-repeat: no-repeat;
     background-position: right 8px center;
     transition: all var(--transition-fast);
+    min-width: 160px;
 }
 
 .toolbar-select:hover {
@@ -104,6 +105,22 @@
     outline: none;
     border-color: var(--primary-400);
     box-shadow: 0 0 0 2px var(--primary-100);
+}
+
+/* Optgroup styling */
+.toolbar-select optgroup {
+    font-weight: 700;
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    color: var(--text-tertiary);
+    background: var(--surface-bg);
+    padding: 4px 0;
+}
+.toolbar-select option {
+    font-weight: 400;
+    padding: 4px 8px;
+    background: var(--surface-card);
+    color: var(--text-primary);
 }
 
 .toolbar-select-sm {
